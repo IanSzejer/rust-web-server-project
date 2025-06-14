@@ -3,7 +3,6 @@ use std::net::TcpStream;
 use std::io::prelude::*;
 use std::fs;
 use std::thread;
-use std::thread::Thread;
 use std::time::Duration;
 use server::ThreadPool;
 
@@ -12,7 +11,7 @@ fn main() {
     
     let pool = ThreadPool::new(4);
     
-    for stream in listener.incoming() {
+    for stream in listener.incoming().take(2) {
         let stream = stream.unwrap();
 
         pool.execute( || {
